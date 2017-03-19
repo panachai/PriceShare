@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         String password = PasswordEt.getText().toString();
         String type = "login";
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-        //backgroundWorker.execute(type, username, password);
+        backgroundWorker.execute(type, username, password);
     }
 
 }
