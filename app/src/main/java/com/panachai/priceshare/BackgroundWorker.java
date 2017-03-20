@@ -8,7 +8,12 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.Collection;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -16,8 +21,9 @@ import okhttp3.Response;
 
 public class BackgroundWorker extends AsyncTask<String, Void, String> { //ค่า parameter ที่ 3 คือค่า return
 
-    Context context;
-    AlertDialog alertDialog;
+    private Context context;
+    private AlertDialog alertDialog;
+    private Gson gson;
 
     BackgroundWorker(Context ctx) {
         context = ctx;
@@ -27,36 +33,35 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> { //ค่
     protected void onPreExecute() {
         alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.setTitle("Login Status");
+
     }
 
     @Override
     protected String doInBackground(String... params) {
         String type = params[0];
 
-        /*
-        final String _url = "https://api.github.com/markdown/raw";
-        try {
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder().url(_url).build();
-
-            Response response = client.newCall(request).execute();
-            Log.i("OKhttp", response.body().string());
-
-            return "" + response.body().string();
-        } catch (Exception e) {
-
-        }
-        */
-
         OkHttpClient okHttpClient = new OkHttpClient();
 
         Request.Builder builder = new Request.Builder();
-        Request request = builder.url("http://date.jsontest.com/").build();
+        Request request = builder.url("http://consolesaleth.esy.es/json/gen_json.php").build();
 
         try {
             Response response = okHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
-                return response.body().string();
+                //response สำเร็จเข้า if นี้
+
+                String result = response.body().string();
+                //return result; //ถ้าไม่ทำไปใช้ต่อ return แค่นี้
+
+                //นำค่ามาใช้ GSON
+                gson = new Gson();
+                Type collectionType = new TypeToken<Collection<MemberResponse>>() {
+                }.getType();
+                Collection<MemberResponse> enums = gson.fromJson(result, collectionType);
+                MemberResponse[] memberResult = enums.toArray(new MemberResponse[enums.size()]);
+
+                return memberResult[0].getUsername();
+                //return response.body().string();
             } else {
                 return "Not Success - code : " + response.code();
             }
