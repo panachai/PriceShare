@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:id="@+id/myrl"
-tools:context="com.panachai.priceshare.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/myrl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.panachai.priceshare.MainActivity">
 
 
     <EditText
@@ -31,10 +32,20 @@ tools:context="com.panachai.priceshare.MainActivity">
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/etPassword"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="48dp"
         android:layout_marginTop="46dp"
         android:onClick="OnLogin"
-        android:text="Login"
-        android:layout_below="@+id/etPassword"
-        android:layout_centerHorizontal="true" />
+        android:text="Login" />
+
+    <Button
+        android:id="@+id/send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/btnLogin"
+        android:layout_below="@+id/btnLogin"
+        android:layout_marginTop="19dp"
+        android:onClick="OnSend"
+        android:text="Send" />
 </RelativeLayout>

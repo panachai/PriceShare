@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+
 public class MainActivity extends AppCompatActivity {
     EditText UsernameEt, PasswordEt;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,5 +28,13 @@ public class MainActivity extends AppCompatActivity {
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         backgroundWorker.execute(type, username, password);
     }
+
+    public void OnSend(View view) {
+
+        DbSort dbsort = new DbSort(this);
+        dbsort.execute();
+
+    }
+
 
 }

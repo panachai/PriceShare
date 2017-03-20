@@ -4,26 +4,23 @@ package com.panachai.priceshare;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.StrictMode;
-import android.util.Log;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collection;
 
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class BackgroundWorker extends AsyncTask<String, Void, String> { //ค่า parameter ที่ 3 คือค่า return
 
     private Context context;
     private AlertDialog alertDialog;
-    private Gson gson;
+    private Gson gson = new Gson();
 
     BackgroundWorker(Context ctx) {
         context = ctx;
@@ -47,6 +44,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> { //ค่
 
         try {
             Response response = okHttpClient.newCall(request).execute();
+
             if (response.isSuccessful()) {
                 //response สำเร็จเข้า if นี้
 
@@ -54,7 +52,6 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> { //ค่
                 //return result; //ถ้าไม่ทำไปใช้ต่อ return แค่นี้
 
                 //นำค่ามาใช้ GSON
-                gson = new Gson();
                 Type collectionType = new TypeToken<Collection<MemberResponse>>() {
                 }.getType();
                 Collection<MemberResponse> enums = gson.fromJson(result, collectionType);
