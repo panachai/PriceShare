@@ -9,7 +9,6 @@ import android.widget.EditText;
 public class MainActivity extends AppCompatActivity {
     EditText UsernameEt, PasswordEt;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,21 +19,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     public void OnLogin(View view) {
         String username = UsernameEt.getText().toString();
         String password = PasswordEt.getText().toString();
         String type = "login";
+
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         backgroundWorker.execute(type, username, password);
     }
 
     public void OnSend(View view) {
+        String username = UsernameEt.getText().toString();
+        String password = PasswordEt.getText().toString();
+        String type = "login";
 
         DbSort dbsort = new DbSort(this);
-        dbsort.execute();
+        dbsort.execute(type, username, password);
 
     }
-
 
 }

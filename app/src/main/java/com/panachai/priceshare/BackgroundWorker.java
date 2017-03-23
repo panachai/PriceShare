@@ -40,7 +40,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> { //ค่
         OkHttpClient okHttpClient = new OkHttpClient();
 
         Request.Builder builder = new Request.Builder();
-        Request request = builder.url("http://consolesaleth.esy.es/json/gen_json.php").build();
+        Request request = builder.url("http://10.0.2.2/Webservice/gen_json.php").build(); //http://consolesaleth.esy.es/json/gen_json.php
 
         try {
             Response response = okHttpClient.newCall(request).execute();

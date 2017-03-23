@@ -7,14 +7,12 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
-import java.util.Map;
 
 
 /**
@@ -44,22 +42,39 @@ public class DbSort extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params) {
+        String type = params[0];
+        String name = params[1];
+        String pass = params[2];
 
-        postHttp http = new postHttp();
-        RequestBody formBody = new FormEncodingBuilder()
-                .add("sName", "Weerachai")
-                .add("sLastName", "Nukitram")
-                .build();
-
-        String response = null;
-        try {
-            response = http.run("http://10.0.2.2/Webservice/postString.php",formBody);
-        } catch (IOException e) {
+        if (type.equals("login")) {
+            postHttp http = new postHttp();
+            RequestBody formBody = new FormEncodingBuilder()
+                    .add("sName", name)
+                    .add("sLastName", pass)
+                    .build();
+            String response = null;
+            try {
+                response = http.run("http://10.0.2.2/Webservice/check_login.php", formBody); //http://10.0.2.2/Webservice/postString.php
+                Log.d("Response : ",response);
+            } catch (IOException e) {
 // TODO Auto-generated catch block
-            e.printStackTrace();
+                e.printStackTrace();
+            }
+
+            if(response.isEmpty()){
+                Log.d("Response empty : ","null");
+                return "notPass";
+            }else{
+                //ว่าจะใส่ intend ตรงนี้เลย
+                return "Pass";
+
+            }
+
+
+        }else{
+            return "no type login";
         }
 
-        return response;
     }
 
 
