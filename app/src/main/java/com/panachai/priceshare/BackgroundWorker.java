@@ -21,6 +21,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> { //ค่
     private Context context;
     private AlertDialog alertDialog;
     private Gson gson = new Gson();
+    private String result;
 
     BackgroundWorker(Context ctx) {
         context = ctx;
@@ -45,6 +46,8 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> { //ค่
         try {
             Response response = okHttpClient.newCall(request).execute();
 
+            //ไว้ใช้ get สินค้าต่างๆ
+
             if (response.isSuccessful()) {
                 //response สำเร็จเข้า if นี้
 
@@ -52,12 +55,12 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> { //ค่
                 //return result; //ถ้าไม่ทำไปใช้ต่อ return แค่นี้
 
                 //นำค่ามาใช้ GSON
-                Type collectionType = new TypeToken<Collection<MemberResponse>>() {
+                Type collectionType = new TypeToken<Collection<CustomerResponse>>() {
                 }.getType();
-                Collection<MemberResponse> enums = gson.fromJson(result, collectionType);
-                MemberResponse[] memberResult = enums.toArray(new MemberResponse[enums.size()]);
+                Collection<CustomerResponse> enums = gson.fromJson(result, collectionType);
+                CustomerResponse[] memberResult = enums.toArray(new CustomerResponse[enums.size()]);
 
-                return memberResult[0].getUsername();
+                return memberResult[0].getCusUser();
                 //return response.body().string();
             } else {
                 return "Not Success - code : " + response.code();

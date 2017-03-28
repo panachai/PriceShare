@@ -21,7 +21,6 @@ import java.io.IOException;
 
 public class DbSort extends AsyncTask<String, Void, String> {
 
-
     private Context context;
     private AlertDialog alertDialog;
     private Gson gson = new Gson();
@@ -49,29 +48,29 @@ public class DbSort extends AsyncTask<String, Void, String> {
         if (type.equals("login")) {
             postHttp http = new postHttp();
             RequestBody formBody = new FormEncodingBuilder()
-                    .add("sName", name)
-                    .add("sLastName", pass)
+                    .add("cusUser", name)
+                    .add("cusPass", pass)
                     .build();
             String response = null;
             try {
                 response = http.run("http://10.0.2.2/Webservice/check_login.php", formBody); //http://10.0.2.2/Webservice/postString.php
-                Log.d("Response : ",response);
+                Log.d("Response : ", response);
             } catch (IOException e) {
 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
-            if(response.isEmpty()){
-                Log.d("Response empty : ","null");
+            if (response.isEmpty()) {
+                Log.d("Response empty : ", "null");
                 return "notPass";
-            }else{
+            } else {
                 //ว่าจะใส่ intend ตรงนี้เลย
-                return "Pass";
+                return "Pass"; //response;
 
             }
 
 
-        }else{
+        } else {
             return "no type login";
         }
 
